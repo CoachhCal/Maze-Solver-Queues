@@ -31,7 +31,7 @@ void MazeSolver::solve_maze(int argc , char** argv) {
         _maze_length += 1;
     }
 
-    if(line.empty()) {
+    if (line.empty()) {
         std::cerr << "Error: extra line at the end of file" << std::endl;
         return;
     }
@@ -56,7 +56,7 @@ void MazeSolver::solve_maze(int argc , char** argv) {
 
     std::vector<std::pair<int, int>> move_to_coords;
 
-    while(stack.top()->_x_coord != _maze_exits[1].first || stack.top()->_y_coord != _maze_exits[1].second) {
+    while (stack.top()->_x_coord != _maze_exits[1].first || stack.top()->_y_coord != _maze_exits[1].second) {
 
         int x_coord = stack.top()->_x_coord;
         int y_coord = stack.top()->_y_coord;
@@ -93,12 +93,20 @@ void MazeSolver::solve_maze(int argc , char** argv) {
         _maze[stack.top()->_x_coord][stack.top()->_y_coord] = '#';
     }
     save_solved_maze(argv[1]);
+
+    // Deallocate memory
+    for (int i = 0; i < _maze_length; ++i) {
+        delete[] _maze[i]; // Delete each row
+    }
+
+    delete[] _maze;
+
 }
 
 void MazeSolver::populate_maze(std::string text) const {
     int char_index = 0;
-    while(char_index < text.length()){
-        for(int y = 0; y < _maze_width; y++){
+    while (char_index < text.length()){
+        for (int y = 0; y < _maze_width; y++){
             for (int x = 0; x < _maze_length; x++){
                 _maze[x][y] = text[char_index];
                 char_index++;
@@ -108,8 +116,8 @@ void MazeSolver::populate_maze(std::string text) const {
 }
 
 void MazeSolver::find_maze_exits(){
-    int char_index=0;
-    for(int y = 0; y < _maze_width; y++){
+    int char_index = 0;
+    for (int y = 0; y < _maze_width; y++){
         for (int x = 0; x < _maze_length; x++){
             if((_maze[x][y]) == ' ' && (x == 0 || y == 0 || x == _maze_width - 1 || y  == _maze_length - 1)){
                 _maze_exits.emplace_back(x, y);
@@ -136,7 +144,7 @@ void MazeSolver::save_solved_maze(const std::string& file_name) const {
 
     //write maze to the solved file
     //The '@' are removed, as they show wrong pathways
-    for(int y = 0; y < _maze_width; y++){
+    for (int y = 0; y < _maze_width; y++){
         for (int x = 0; x < _maze_length; x++){
             if (_maze[x][y] == '@'){
                 _maze[x][y] = ' ';

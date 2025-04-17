@@ -1,7 +1,7 @@
 # Maze Solver
 
 ## Overview
-A C++ console application designed to solve mazes using **queues**, avoiding recursion entirely. The program reads a **25x25 maze** from a text file, processes it, and outputs the solved maze in another text file, marking the correct path with `#`.  
+A C++ console application designed to solve mazes using **queues**. The program reads a **25x25 maze** from a text file, processes it, and outputs the solved maze in another text file, marking the correct path with `#`.  
 
 ## Features
 - **Queue-Based Pathfinding:** Utilizes a custom queue implementation to find the shortest path.
